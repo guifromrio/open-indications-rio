@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "async": "^0.8.0",
     "cheerio": "^0.15.0",
     "request": "^2.34.0"
   }
