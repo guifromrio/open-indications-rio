@@ -15,10 +15,12 @@ columnsMap = {
   'YEAR': null
 }
 
-indicationIndexes = [0..3397]
+indicationIndexes = [0..5750]
 #indicationIndexes = [0..0]
 
-indications = indicationIndexes.map (i) -> fs.readFileSync('indications/indication-' + ("0000" + i).slice(-4) + '.html').toString()
+indications = indicationIndexes.map (i) -> try fs.readFileSync('indications/indication-' + ("0000" + i).slice(-4) + '.html').toString()
+indications = _.uniq indications
+indications = _.compact indications
 
 parsedIndications = indications.map (html) ->
   $ = cheerio.load html
