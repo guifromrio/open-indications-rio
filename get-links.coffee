@@ -2,8 +2,21 @@ request = require 'request'
 $ = require 'cheerio'
 fs = require 'fs'
 
+year = '1316'
+
 host = "http://mail.camara.rj.gov.br"
-getURL = (start) -> "#{host}/APL/Legislativos/scpro1316.nsf/Internet/IndInt?OpenForm&Start=#{start}&Count=1000&ExpandView"
+
+config =
+  '0711': {
+    'fileURL': 'scpro0711.nsf'
+    'map': '93A'
+  }
+  '1316': {
+    'fileURL': 'scpro1316.nsf'
+    'map': '816'
+  }
+
+getURL = (start) -> "#{host}/APL/Legislativos/#{config[year].fileURL}/Internet/IndInt?OpenForm&Start=#{start}&Count=1000&ExpandView"
 
 pages = 20
 
@@ -20,7 +33,8 @@ buildIndexFromPage = (start) ->
     links.map (i, a) ->
       hrefs.push host + a.attribs.href if a.children[0].data[0] isnt " "
 
-    next = $('map[name="816.map"] area')[3]
+    className = 'map[name="' + config[year].map + '.map"] area'
+    next = $(className)[3]
     newStart = next.attribs.href.replace(/.*Start\=/, "").replace(/&.*/, "")
 
     console.log "got #{hrefs.length} links"
