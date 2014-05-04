@@ -24,7 +24,7 @@ buildIndexFromPage = (start) ->
     newStart = next.attribs.href.replace(/.*Start\=/, "").replace(/&.*/, "")
 
     console.log "got #{hrefs.length} links"
-    fs.appendFileSync 'links.txt', hrefs.join('\n')
+    fs.appendFileSync 'links.txt', hrefs.join('\n') + '\n'
 
     if --pages is 0 or hrefs.length is 0
       console.log 'finished'
